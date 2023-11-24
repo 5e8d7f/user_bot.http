@@ -48,8 +48,8 @@ pm2 start pm2.json
 
 # Tips on common commands
 pm2 <command> [name]
-  start discord_bot.py    Run the bot again if it's offline
-  list                    Get a full list of all available services
-  stop discord_bot.py     Stop the bot
-  reboot discord_bot.py   Reboot the bot
+  start discord_bot.http   Run the bot again if it's offline
+  list                     Get a full list of all available services
+  stop discord_bot.http    Stop the bot
+  reboot discord_bot.http  Reboot the bot
 ```
