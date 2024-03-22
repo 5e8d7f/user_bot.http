@@ -2,7 +2,7 @@
 
 :MENU
 cls
-echo Welcome to AlexFlipnote/discord_bot.http
+echo Welcome to ilyigna/user_bot.http
 echo    1 Start the bot
 echo    2 Install dependencies
 echo    3 Exit menu
@@ -35,7 +35,7 @@ IF %item%==1 (
     pause
     exit
   )
-  CALL pip install -r requirements.txt --upgrade
+  CALL pip install -Ur requirements.txt
   pause
   GOTO MENU
 

@@ -1,6 +1,7 @@
-from discord_http import commands, Context, User
-from utils.data import CustomClient
+from discord_http import Context, User, commands
+
 from utils import permissions
+from utils.data import CustomClient
 
 
 class Admin(commands.Cog):
@@ -9,7 +10,7 @@ class Admin(commands.Cog):
 
     @commands.command()
     async def amiadmin(self, ctx: Context):
-        """ Are you an admin of this bot? """
+        """Are you an admin of this bot?"""
         if ctx.user.id == self.bot.config["DISCORD_OWNER_ID"]:
             return ctx.response.send_message(
                 f"Yes **{ctx.user.name}** you are an admin! ✅"
@@ -19,13 +20,10 @@ class Admin(commands.Cog):
         #   -- AlexFlipnote
         elif ctx.user.id == 86477779717066752:
             return ctx.response.send_message(
-                f"Well kinda **{ctx.user.name}**.. "
-                "you still own the source code"
+                f"Well kinda **{ctx.user.name}**.. " "you still own the source code"
             )
         else:
-            return ctx.response.send_message(
-                f"no, heck off {ctx.user.name}"
-            )
+            return ctx.response.send_message(f"no, heck off {ctx.user.name}")
 
     @commands.command()
     @commands.check(permissions.is_owner)
@@ -40,10 +38,7 @@ class Admin(commands.Cog):
             except Exception as e:
                 await ctx.followup.send(f"❌ Failed to send message\n> {e}")
 
-        return ctx.response.defer(
-            ephemeral=True, thinking=True,
-            call_after=call_after
-        )
+        return ctx.response.defer(ephemeral=True, thinking=True, call_after=call_after)
 
 
 async def setup(bot: CustomClient):

@@ -2,7 +2,7 @@ version: "3"
 
 services:
   bot:
-    container_name: "discord_bot.http"
+    container_name: "user_bot.http"
     build: .
     volumes:
       - ./.env:/discord_bot/.env

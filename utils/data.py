@@ -1,5 +1,6 @@
-import discord_http
 import os
+
+import discord_http
 
 
 class CustomClient(discord_http.Client):

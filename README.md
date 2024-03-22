@@ -1,5 +1,6 @@
-# discord_bot.http
-🍺 A simple discord bot that helps you getting started within discord.http
+# user_bot.http
+### a fork of [discord_bot.http](https://github.com/AlexFlipnote/discord_bot.http)
+🍺 A simple discord installable bot that helps you getting started within discord.http
 
 Do you need more help? Visit my server here: **https://discord.gg/AlexFlipnote** 🍺
 
@@ -16,7 +17,7 @@ I recommend having Visual Studio Code with the Python extension installed to hel
 
 ## How to setup
 1. Make a bot [here](https://discordapp.com/developers/applications/me) and grab the token, application ID and public key.
-2. Rename the file **.env.example** to **.env**, then fill in the required spots, such as token, prefix and game
+2. Rename the file **.env.example** to **.env**, then fill in the required spots, such as token, prefix and public key
 3. To install what you need, do **pip install -r requirements.txt**
 4. Start the bot by having the cmd/terminal inside the bot folder and type **python index.py**
 5. Make sure that your Discord bot has an Interaction URL to communicate with. You can read [here](https://discordhttp.dev/pages/getting_started.html) on how to set it up. The TLDR is that you need to expose your IP/domain to the public in order for Discord to communicate with your bot.
@@ -24,7 +25,7 @@ I recommend having Visual Studio Code with the Python extension installed to hel
 
 ## FAQ
 Q: I don't see my bot on my server!<br>
-A: Invite it by using this URL: https://discordapp.com/oauth2/authorize?client_id=APPLICATION_ID&scope=bot+applications.commands<br>
+A: Invite it by using this URL: https://discord.com/oauth2/authorize?client_id=APPLICATION_ID<br>
 Remember to replace **APPLICATION_ID** with your bot Application ID
 
 Q: There aren't that many commands here...<br>
@@ -48,8 +49,8 @@ pm2 start pm2.json
 
 # Tips on common commands
 pm2 <command> [name]
-  start discord_bot.http   Run the bot again if it's offline
+  start user_bot.http   Run the bot again if it's offline
   list                     Get a full list of all available services
-  stop discord_bot.http    Stop the bot
-  reboot discord_bot.http  Reboot the bot
+  stop user_bot.http    Stop the bot
+  reboot user_bot.http  Reboot the bot
 ```

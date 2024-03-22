@@ -1,4 +1,4 @@
-from discord_http import Context, CheckFailed
+from discord_http import CheckFailed, Context
 
 
 def is_owner(ctx: Context):

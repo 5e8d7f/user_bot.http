@@ -1,11 +1,9 @@
 import random
-import aiohttp
 import secrets
 
-from discord_http import (
-    commands, Context, http, MessageResponse,
-    AllowedMentions, Member
-)
+import aiohttp
+from discord_http import (AllowedMentions, Context, Member, MessageResponse,
+                          commands, http)
 
 from utils.data import CustomClient
 
@@ -14,17 +12,26 @@ class FunCommands(commands.Cog):
     def __init__(self, bot):
         self.bot: CustomClient = bot
 
-    @commands.command(name="8ball")
+    @commands.command(name="8ball", user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
     @commands.describe(
         question="The question you want want answers too",
     )
     async def eightball(self, ctx: Context, question: str):
-        """ Consult 8ball to receive an answer """
+        """Consult 8ball to receive an answer"""
         ballresponse = [
-            "Yes", "No", "Take a wild guess...", "Very doubtful",
-            "Sure", "Without a doubt", "Most likely", "Might be possible",
-            "You'll be the judge", "no... (╯°□°）╯︵ ┻━┻", "no... baka",
-            "senpai, pls no ;-;"
+            "Yes",
+            "No",
+            "Take a wild guess...",
+            "Very doubtful",
+            "Sure",
+            "Without a doubt",
+            "Most likely",
+            "Might be possible",
+            "You'll be the judge",
+            "no... (╯°□°）╯︵ ┻━┻",
+            "no... baka",
+            "senpai, pls no ;-;",
         ]
 
         return ctx.response.send_message(
@@ -33,19 +40,17 @@ class FunCommands(commands.Cog):
         )
 
     async def randomimageapi(
-        self, ctx: Context,
-        url: str, *endpoint: str
+        self, ctx: Context, url: str, *endpoint: str
     ) -> MessageResponse:
         async def call_after():
             try:
-                r = await http.query(
-                    "GET", url,
-                    res_method="json"
-                )
+                r = await http.query("GET", url, res_method="json")
             except aiohttp.ClientConnectorError:
                 return await ctx.followup.send("The API seems to be down...")
             except aiohttp.ContentTypeError:
-                return await ctx.followup.send("The API returned an error or didn't return JSON...")
+                return await ctx.followup.send(
+                    "The API returned an error or didn't return JSON..."
+                )
 
             result = r.response
             for step in endpoint:
@@ -55,39 +60,58 @@ class FunCommands(commands.Cog):
 
         return ctx.response.defer(thinking=True, call_after=call_after)
 
-    @commands.command()
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
     async def duck(self, ctx: Context):
-        """ Posts a random duck """
-        return await self.randomimageapi(ctx, "https://random-d.uk/api/v1/random", "url")
+        """Posts a random duck"""
+        return await self.randomimageapi(
+            ctx, "https://random-d.uk/api/v1/random", "url"
+        )
 
-    @commands.command()
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
     async def coffee(self, ctx: Context):
-        """ Posts a random coffee """
-        return await self.randomimageapi(ctx, "https://coffee.alexflipnote.dev/random.json", "file")
+        """Posts a random coffee"""
+        return await self.randomimageapi(
+            ctx, "https://coffee.alexflipnote.dev/random.json", "file"
+        )
 
-    @commands.command()
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
     async def birb(self, ctx: Context):
-        """ Posts a random birb """
-        return await self.randomimageapi(ctx, "https://api.alexflipnote.dev/birb", "file")
+        """Posts a random birb"""
+        return await self.randomimageapi(
+            ctx, "https://api.alexflipnote.dev/birb", "file"
+        )
 
-    @commands.command()
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
     async def sadcat(self, ctx: Context):
-        """ Post a random sadcat """
-        return await self.randomimageapi(ctx, "https://api.alexflipnote.dev/sadcat", "file")
+        """Post a random sadcat"""
+        return await self.randomimageapi(
+            ctx, "https://api.alexflipnote.dev/sadcat", "file"
+        )
 
-    @commands.command()
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
     async def cat(self, ctx: Context):
-        """ Posts a random cat """
-        return await self.randomimageapi(ctx, "https://api.alexflipnote.dev/cats", "file")
+        """Posts a random cat"""
+        return await self.randomimageapi(
+            ctx, "https://api.alexflipnote.dev/cats", "file"
+        )
 
-    @commands.command()
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
     async def dog(self, ctx: Context):
-        """ Posts a random dog """
-        return await self.randomimageapi(ctx, "https://api.alexflipnote.dev/dogs", "file")
+        """Posts a random dog"""
+        return await self.randomimageapi(
+            ctx, "https://api.alexflipnote.dev/dogs", "file"
+        )
 
-    @commands.command()
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
     async def coinflip(self, ctx: Context):
-        """ Coinflip! """
+        """Coinflip!"""
         coinsides = ["Heads", "Tails"]
 
         return ctx.response.send_message(
@@ -95,12 +119,11 @@ class FunCommands(commands.Cog):
             f"**{random.choice(coinsides)}**!"
         )
 
-    @commands.command()
-    @commands.describe(
-        text="What are we paying respect for?"
-    )
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
+    @commands.describe(text="What are we paying respect for?")
     async def f(self, ctx: Context, text: str = None):
-        """ Press F to pay respect """
+        """Press F to pay respect"""
         hearts = ["❤", "💛", "💚", "💙", "💜"]
         reason = f"for **{text}** " if text else ""
 
@@ -109,28 +132,34 @@ class FunCommands(commands.Cog):
             f"{reason}{random.choice(hearts)}"
         )
 
-    @commands.command()
-    @commands.describe(
-        search="The search term you want to search for"
-    )
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
+    @commands.describe(search="The search term you want to search for")
     async def urban(self, ctx: Context, search: str):
-        """ Find the 'best' definition to your words """
+        """Find the 'best' definition to your words"""
+
         async def call_after():
             try:
                 r = await http.query(
                     "GET",
                     f"https://api.urbandictionary.com/v0/define?term={search}",
-                    res_method="json"
+                    res_method="json",
                 )
             except Exception:
-                return await ctx.followup.send("Urban API returned invalid data... might be down atm.")
+                return await ctx.followup.send(
+                    "Urban API returned invalid data... might be down atm."
+                )
 
             if not r.response:
                 return await ctx.followup.send("I think the API broke...")
             if not len(r.response["list"]):
-                return await ctx.followup.send("Couldn't find your search in the dictionary...")
+                return await ctx.followup.send(
+                    "Couldn't find your search in the dictionary..."
+                )
 
-            result = sorted(r.response["list"], reverse=True, key=lambda g: int(g["thumbs_up"]))[0]
+            result = sorted(
+                r.response["list"], reverse=True, key=lambda g: int(g["thumbs_up"])
+            )[0]
 
             definition = result["definition"]
             if len(definition) >= 1000:
@@ -138,50 +167,49 @@ class FunCommands(commands.Cog):
                 definition = definition.rsplit(" ", 1)[0]
                 definition += "..."
 
-            await ctx.followup.send(f"📚 Definitions for **{result['word']}**```fix\n{definition}```")
+            await ctx.followup.send(
+                f"📚 Definitions for **{result['word']}**```fix\n{definition}```"
+            )
 
         return ctx.response.defer(thinking=True, call_after=call_after)
 
-    @commands.command()
-    @commands.describe(
-        text="The text you want to reverse"
-    )
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
+    @commands.describe(text="The text you want to reverse")
     async def reverse(self, ctx: Context, text: str):
-        """ !poow ,ffuts esreveR
+        """!poow ,ffuts esreveR
         Everything you type after reverse will of course, be reversed
         """
         t_rev = text[::-1].replace("@", "@\u200B").replace("&", "&\u200B")
         return ctx.response.send_message(
-            f"🔁 {t_rev}",
-            allowed_mentions=AllowedMentions.none()
+            f"🔁 {t_rev}", allowed_mentions=AllowedMentions.none()
         )
 
-    @commands.command()
-    @commands.describe(
-        nbytes="The number of bytes you want to generate a password for"
-    )
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
+    @commands.describe(nbytes="The number of bytes you want to generate a password for")
     async def password(self, ctx: Context, nbytes: commands.Range[int, 3, 1400] = 14):
-        """ Generates a random password string for you """
+        """Generates a random password string for you"""
         return ctx.response.send_message(
             f"🎁 **Here is your password:**\n{secrets.token_urlsafe(nbytes)}",
-            ephemeral=True
+            ephemeral=True,
         )
 
-    @commands.command()
-    @commands.describe(
-        thing="The thing you want to rate"
-    )
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
+    @commands.describe(thing="The thing you want to rate")
     async def rate(self, ctx: Context, thing: str):
-        """ Rates what you desire """
+        """Rates what you desire"""
         rate_amount = random.uniform(0.0, 100.0)
-        return ctx.response.send_message(f"I'd rate `{thing}` a **{round(rate_amount, 4)} / 100**")
+        return ctx.response.send_message(
+            f"I'd rate `{thing}` a **{round(rate_amount, 4)} / 100**"
+        )
 
-    @commands.command()
-    @commands.describe(
-        user="The user you want to rate, leave empty to rate yourself"
-    )
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
+    @commands.describe(user="The user you want to rate, leave empty to rate yourself")
     async def hotcalc(self, ctx: Context, user: Member = None):
-        """ Returns a random percent for how hot is a discord user """
+        """Returns a random percent for how hot is a discord user"""
         user = user or ctx.user
         random.seed(user.id)
         r = random.randint(1, 100)
@@ -201,29 +229,35 @@ class FunCommands(commands.Cog):
             f"**{user.name}** is **{hot:.2f}%** hot {emoji}"
         )
 
-    @commands.command()
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
     async def slot(self, ctx: Context):
-        """ Roll the slot machine """
+        """Roll the slot machine"""
         a, b, c = [random.choice("🍎🍊🍐🍋🍉🍇🍓🍒") for _ in range(3)]
 
-        if (a == b == c):
+        if a == b == c:
             results = "All matching, you won! 🎉"
         elif (a == b) or (a == c) or (b == c):
             results = "2 in a row, you won! 🎉"
         else:
             results = "No match, you lost 😢"
 
-        return ctx.response.send_message(f"**[ {a} {b} {c} ]\n{ctx.user.name}**, {results}")
+        return ctx.response.send_message(
+            f"**[ {a} {b} {c} ]\n{ctx.user.name}**, {results}"
+        )
 
-    @commands.command()
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
     async def dice(self, ctx: Context):
-        """ Dice game. Good luck """
+        """Dice game. Good luck"""
         bot_dice, player_dice = [random.randint(1, 6) for g in range(2)]
 
-        results = "\n".join([
-            f"**{self.bot.user.name}:** 🎲 {bot_dice}",
-            f"**{ctx.user.display_name}** 🎲 {player_dice}"
-        ])
+        results = "\n".join(
+            [
+                f"**{self.bot.user.name}:** 🎲 {bot_dice}",
+                f"**{ctx.user.name}** 🎲 {player_dice}",
+            ]
+        )
 
         match player_dice:
             case x if x > bot_dice:
@@ -235,26 +269,29 @@ class FunCommands(commands.Cog):
 
         return ctx.response.send_message(f"{results}\n> {final_message}")
 
-    @commands.command()
-    @commands.describe(
-        colour="The colour you want to 'bet' on"
-    )
+    @commands.command(user_install=True)
+    @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
+    @commands.describe(colour="The colour you want to 'bet' on")
     @commands.choices(
         colour={
             "blue": "🔵 Blue",
             "red": "🔴 Red",
             "green": "🟢 Green",
-            "yellow": "🟡 Yellow"
+            "yellow": "🟡 Yellow",
         }
     )
     async def roulette(self, ctx: Context, colour: commands.Choice[str]):
-        """ Colour roulette """
+        """Colour roulette"""
         colour_table = ["blue", "red", "green", "yellow"]
         winner_colour = random.choice(colour_table)
 
         if winner_colour == colour.key:
-            return ctx.response.send_message(f"Congrats, you won! 🎉\n> The colour was **{colour.value}**")
-        return ctx.response.send_message(f"You lost, try again... 🍃\n> The colour was **{winner_colour}**")
+            return ctx.response.send_message(
+                f"Congrats, you won! 🎉\n> The colour was **{colour.value}**"
+            )
+        return ctx.response.send_message(
+            f"You lost, try again... 🍃\n> The colour was **{winner_colour}**"
+        )
 
 
 async def setup(bot: CustomClient):

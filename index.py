@@ -1,5 +1,6 @@
-from utils.data import CustomClient
 from dotenv import dotenv_values
+
+from utils.data import CustomClient
 
 config = dotenv_values(".env")
 
@@ -8,10 +9,7 @@ client = CustomClient(
     application_id=config["DISCORD_APPLICATION_ID"],
     public_key=config["DISCORD_PUBLIC_KEY"],
     sync=config["DISCORD_SYNC"].lower() == "true",
-    config=config
+    config=config,
 )
 
-client.start(
-    host=config["HTTP_HOST"],
-    port=config["HTTP_PORT"]
-)
+client.start(host=config["HTTP_HOST"], port=config["HTTP_PORT"])
