@@ -1,6 +1,6 @@
 # user_bot.http
 ### a fork of [discord_bot.http](https://github.com/AlexFlipnote/discord_bot.http)
-🍺 A simple discord installable bot that helps you getting started within discord.http
+🍺 A simple discord user-installable bot that helps you getting started within discord.http
 
 Do you need more help? Visit my server here: **https://discord.gg/AlexFlipnote** 🍺
 
