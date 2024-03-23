@@ -250,7 +250,7 @@ class FunCommands(commands.Cog):
     @commands.allow_contexts(guild=True, bot_dm=False, private_dm=True)
     async def dice(self, ctx: Context):
         """Dice game. Good luck"""
-        bot_dice, player_dice = [random.randint(1, 6) for g in range(2)]
+        bot_dice, player_dice = [random.randint(1, 6) for _ in range(2)]
 
         results = "\n".join(
             [
