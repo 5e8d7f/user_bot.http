@@ -1,6 +1,7 @@
 services:
   bot:
-    container_name: "user_bot.http"
+    container_name: user_bot.http
     build: .
-    volumes:
-      - ./.env:/discord_bot/.env
+    restart: unless-stopped
+    ports:
+      - "9999:9999"

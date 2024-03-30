@@ -1,0 +1,21 @@
+# Git
+.git
+.gitignore
+*.md
+
+# Docker
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# Virtual environment
+.env.example
+.venv/
+venv/
+
+# VS Code
+.vscode/
+
+# Cache
+__pycache__/
+.ruff_cache/
