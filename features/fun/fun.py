@@ -3,7 +3,6 @@ import re
 
 from discord_http import AllowedMentions, Context, Embed
 from discord_http.commands import Choice, Cog, choices, command, describe
-from munch import Munch
 
 from tools import Client
 from tools.utilities.text import plural
@@ -101,14 +100,13 @@ class Fun(Cog):
     @describe(search="The search term you want to search for")
     async def urban(self, ctx: Context, search: str):
         """Search the Urban Dictionary"""
-        response: Munch = await self.bot.session.request(
+        async with self.bot.session.request(
             "http://api.urbandictionary.com/v0/define", params=dict(term=search)
-        )
-
-        if not response.list:
-            return ctx.response.send_message(
-                "No results found for that search term. Try again with a different one."
-            )
+        ) as response:
+            if not response.list:
+                return ctx.response.send_message(
+                    "No results found for that search term. Try again with a different one."
+                )
 
         def repl(match: re.Match) -> str:
             word = match[2]

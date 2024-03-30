@@ -5,7 +5,6 @@ from typing import Optional
 import psutil
 from discord_http import Context, Embed, File, Member
 from discord_http.commands import Cog, command, describe
-from munch import Munch
 
 from tools import Client
 from tools.utilities.text import format_dt, sanitize, size
@@ -85,11 +84,22 @@ class Miscellaneous(Cog):
         """
         user = user or ctx.user
 
+        if not user.avatar:
+            return ctx.response.send_message(
+                embed=Embed(
+                    description=(
+                        "You don't have an avatar present!"
+                        if user == ctx.user
+                        else f"`{user}` doesn't have an avatar present!"
+                    ),
+                )
+            )
+
         embed = Embed(
-            url=user.global_avatar,
+            url=user.avatar.url,
             title=("Your avatar" if user == ctx.user else f"{user.name}'s avatar"),
         )
-        embed.set_image(url=user.global_avatar)
+        embed.set_image(url=user.avatar.url)
 
         return ctx.response.send_message(embed=embed)
 
@@ -122,10 +132,10 @@ class Miscellaneous(Cog):
             )
 
         embed = Embed(
-            url=user.banner,
+            url=user.banner.url,
             title=("Your banner" if user == ctx.user else f"{user.name}'s banner"),
         )
-        embed.set_image(url=user.banner)
+        embed.set_image(url=user.banner.url)
 
         return ctx.response.send_message(embed=embed)
 
@@ -141,19 +151,19 @@ class Miscellaneous(Cog):
         View Minecraft server information.
         """
 
-        data: Munch = await self.bot.session.request(
+        async with self.bot.session.request(
             f"https://api.mcsrvstat.us/2/{sanitize(server_ip)}",
-        )
-        if not data.online:
-            return ctx.response.send_message(
-                embed=Embed(
-                    description=(
-                        f"Server `{data.hostname}` is offline!"
-                        if data.hostname
-                        else f"Server `{server_ip}` is offline!"
-                    ),
+        ) as data:
+            if not data.online:
+                return ctx.response.send_message(
+                    embed=Embed(
+                        description=(
+                            f"Server `{data.hostname}` is offline!"
+                            if data.hostname
+                            else f"Server `{server_ip}` is offline!"
+                        ),
+                    )
                 )
-            )
 
         embed = Embed(
             description=(

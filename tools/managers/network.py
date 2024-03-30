@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from typing import Any, Optional
 
 from aiohttp import ClientSession as DefaultClientSession
@@ -16,6 +17,7 @@ class ClientSession(DefaultClientSession):
             **kwargs,
         )
 
+    @asynccontextmanager
     async def request(
         self: "ClientSession",
         method: str,
@@ -28,43 +30,51 @@ class ClientSession(DefaultClientSession):
             method = "GET"
 
         slug: Optional[str] = kwargs.pop("slug", None)
-        response = await super().request(
-            method=method,
-            url=URL(url),
-            *args,
-            **kwargs,
-        )
+        try:
+            response = await super().request(
+                method=method,
+                url=URL(url),
+                *args,
+                **kwargs,
+            )
 
-        if response.content_type == "text/plain":
-            return await response.text()
+            if response.content_type == "text/plain":
+                yield await response.text()
 
-        if response.content_type.startswith(("image/", "video/", "audio/")):
-            return await response.read()
+            elif response.content_type.startswith(("image/", "video/", "audio/")):
+                yield await response.read()
 
-        if response.content_type == "text/html":
-            return BeautifulSoup(await response.text(), "html.parser")
+            elif response.content_type == "text/html":
+                yield BeautifulSoup(await response.text(), "html.parser")
 
-        if response.content_type in (
-            "application/json",
-            "application/octet-stream",
-            "text/javascript",
-        ):
-            try:
-                data: dict = await response.json()
-            except Exception:
-                return response
+            elif response.content_type in (
+                "application/json",
+                "application/octet-stream",
+                "text/javascript",
+            ):
+                try:
+                    data: dict = await response.json()
+                except Exception:
+                    yield response
 
-            munch = DefaultMunch.fromDict(data)
-            if slug:
-                for path in slug.split("."):
-                    if path.isnumeric() and isinstance(munch, list):
-                        try:
-                            munch = munch[int(path)]
-                        except IndexError:
-                            pass
+                munch = DefaultMunch.fromDict(data)
+                if slug:
+                    for path in slug.split("."):
+                        if path.isnumeric() and isinstance(munch, list):
+                            try:
+                                munch = munch[int(path)]
+                            except IndexError:
+                                pass
 
-                    munch = getattr(munch, path, munch)
+                        munch = getattr(munch, path, munch)
 
-            return munch
+                yield munch
 
-        return response
+            else:
+                yield response
+
+        finally:
+            await self.close()
+
+    async def close(self: "ClientSession") -> None:
+        await super().close()
