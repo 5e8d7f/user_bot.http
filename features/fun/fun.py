@@ -111,7 +111,7 @@ class Fun(Cog):
             )
 
         def repl(match: re.Match) -> str:
-            word = match.group(2)
+            word = match[2]
             return f"[{word}](https://{word.replace(' ', '-')}.urbanup.com)"
 
         entry = response.list[0]

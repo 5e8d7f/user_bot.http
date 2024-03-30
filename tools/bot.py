@@ -43,7 +43,7 @@ class Client(Client):
             token=environ["DISCORD_TOKEN"],
             application_id=environ["DISCORD_APPLICATION_ID"],
             public_key=environ["DISCORD_PUBLIC_KEY"],
-            sync=True if environ.get("DISCORD_SYNC") == "true" else False,
+            sync=environ.get("DISCORD_SYNC") == "true",
             *args,
             **kwargs,
         )
