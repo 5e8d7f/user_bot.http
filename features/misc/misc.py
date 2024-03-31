@@ -96,10 +96,10 @@ class Miscellaneous(Cog):
             )
 
         embed = Embed(
-            url=user.avatar,
+            url=user.avatar.url,
             title=("Your avatar" if user == ctx.user else f"{user.name}'s avatar"),
         )
-        embed.set_image(url=user.avatar)
+        embed.set_image(url=user.avatar.url)
 
         return ctx.response.send_message(embed=embed)
 
@@ -132,10 +132,10 @@ class Miscellaneous(Cog):
             )
 
         embed = Embed(
-            url=user.banner,
+            url=user.banner.url,
             title=("Your banner" if user == ctx.user else f"{user.name}'s banner"),
         )
-        embed.set_image(url=user.banner)
+        embed.set_image(url=user.banner.url)
 
         return ctx.response.send_message(embed=embed)
 
