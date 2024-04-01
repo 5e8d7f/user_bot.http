@@ -209,7 +209,7 @@ class Miscellaneous(Cog):
 
         embed.add_field(
             name="Developer",
-            value="[**@ignacios**](https://discord.com/users/1164949148974469210)",
+            value="[**@i.gnacio**](https://discord.com/users/583318526509580289)",
             inline=False,
         )
 
