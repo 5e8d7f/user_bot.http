@@ -21,12 +21,12 @@ class ClientBackend(DiscordHTTP):
                 "You do not have the required permissions to run this command!"
             )
 
-        elif isinstance(e, ClientConnectorError):
+        if isinstance(e, ClientConnectorError):
             return ctx.response.send_message(
                 "The **API** timed out during the request!"
             )
 
-        elif isinstance(e, ClientResponseError):
+        if isinstance(e, ClientResponseError):
             return ctx.response.send_message(
                 f"The third party **API** returned a `{e.status}`"
                 + (
@@ -47,13 +47,12 @@ class Client(Client):
             *args,
             **kwargs,
         )
-        self.session: ClientSession
-        self.backend = DiscordHTTP(client=self)
+        self.http: ClientSession
         self.set_backend(cls=ClientBackend)
         self.start(host=environ["HTTP_HOST"], port=int(environ["HTTP_PORT"]))
 
     async def setup_hook(self: "Client"):
-        self.session = ClientSession()
+        self.http = ClientSession()
 
         for feature in Path("features").iterdir():
             if not feature.is_dir():

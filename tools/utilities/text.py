@@ -8,20 +8,21 @@ def remove(value: str, *args: str) -> str:
     return value
 
 
-def format_dt(dt: datetime, style: str) -> str:
-    return f"<t:{int(dt.timestamp())}:{style}>"
-
-
 def sanitize(value: str) -> str:
     return remove(value, "`", "*", "_", "~", "|", ">", "<" "/", "\\")
 
 
-def size(value: int | float, suffix: str = "B") -> str:
-    for unit in ["", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
-        if abs(value) < 1024.0:
-            return f"{value:3.1f} {unit}{suffix}"
-        value /= 1024.0
-    return f"{value:.1f} Yi{suffix}"
+def format_dt(value: datetime, style: str = "R") -> str:
+    return f"<t:{int(value.timestamp())}:{style}>"
+
+
+def size(value: int) -> str:
+    size = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"]
+    i = 0
+    while value >= 1024:
+        value /= 1024
+        i += 1
+    return f"{value:.2f} {size[i]}"
 
 
 class plural:

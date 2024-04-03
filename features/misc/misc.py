@@ -151,7 +151,7 @@ class Miscellaneous(Cog):
         View Minecraft server information.
         """
 
-        data: Munch = await self.bot.session.request(
+        data: Munch = await self.bot.http.request(
             f"https://api.mcsrvstat.us/2/{sanitize(server_ip)}",
         )
         if not data.online:

@@ -47,9 +47,10 @@ class Fun(Cog):
         response = random.choice(list(self.eightball_responses.keys()))
         return ctx.response.send_message(
             embed=Embed(
-                description=f"🎱 **{ctx.user.name}** shakes the 8ball {plural(shakes):shake|shakes} and asks: **{question}**\n\n🎱 **8ball says:** {response}",
+                title="🎱 8ball",
+                description=f"**{ctx.user.mention} asked:** {question}\n\n**🎱 8ball says:** {response}",
                 color=0x2F3136,
-            )
+            ).set_footer(text=f"{plural(shakes):shake|shakes}")
         )
 
     @command(name="duck", user_install=True)
@@ -101,7 +102,7 @@ class Fun(Cog):
     @describe(search="The search term you want to search for")
     async def urban(self, ctx: Context, search: str):
         """Search the Urban Dictionary"""
-        data: Munch = await self.bot.session.request(
+        data: Munch = await self.bot.http.request(
             "https://api.urbandictionary.com/v0/define", params=dict(term=search)
         )
         if not data.list:

@@ -4,9 +4,13 @@ from typing import Optional
 
 
 class CustomFormatter(logging.Formatter):
+    """
+    Custom formatter for the logger
+    """
+
     reset = "\x1b[0m"
 
-    # Normal colours
+    # Normal colors
     white = "\x1b[38;21m"
     grey = "\x1b[38;5;240m"
     blue = "\x1b[38;5;39m"
@@ -14,7 +18,7 @@ class CustomFormatter(logging.Formatter):
     red = "\x1b[38;5;196m"
     bold_red = "\x1b[31;1m"
 
-    # Light colours
+    # Light colors
     light_white = "\x1b[38;5;250m"
     light_grey = "\x1b[38;5;244m"
     light_blue = "\x1b[38;5;75m"
@@ -29,8 +33,6 @@ class CustomFormatter(logging.Formatter):
     def _prefix_fmt(
         self: "CustomFormatter", name: str, primary: str, secondary: str
     ) -> str:
-        # Cut name if longer than 5 characters
-        # If shorter, right-justify it to 5 characters
         name = name[:5].rjust(5)
 
         return f"{secondary}[ {primary}{name}{self.reset} " f"{secondary}]{self.reset}"
