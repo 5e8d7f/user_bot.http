@@ -1,7 +1,10 @@
 # Git
 .git
+.github
+.devcontainer
 .gitignore
 *.md
+
 
 # Docker
 docker-compose.yml

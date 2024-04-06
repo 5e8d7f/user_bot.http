@@ -31,11 +31,16 @@ class Miscellaneous(Cog):
         View information about a user.
         """
         user = user or ctx.user
+        avatar = user.avatar or user.global_avatar
 
         embed = Embed(
             title=(user.name + (" [BOT]" if user.bot else "")),
         )
-        embed.set_thumbnail(url=user.avatar or user.global_avatar)
+        embed.set_thumbnail(url=avatar.url)
+        embed.set_author(
+            name=user.name,
+            icon_url=avatar.url,
+        )
 
         embed.add_field(
             name="Created",
@@ -84,12 +89,13 @@ class Miscellaneous(Cog):
         View a user's avatar.
         """
         user = user or ctx.user
+        avatar = user.avatar or user.global_avatar
 
         embed = Embed(
-            url=user.avatar.url or user.global_avatar.url,
+            url=avatar.url,
             title=("Your avatar" if user == ctx.user else f"{user.name}'s avatar"),
         )
-        embed.set_image(url=user.avatar.url or user.global_avatar.url)
+        embed.set_image(url=avatar.url)
 
         return ctx.response.send_message(embed=embed)
 
