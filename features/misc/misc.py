@@ -97,16 +97,7 @@ class Miscellaneous(Cog):
 
         embed = Embed()
 
-        if user.avatar:
-            embed.set_thumbnail(url=user.global_avatar)
-            embed.set_image(url=user.avatar)
-        else:
-            embed.set_image(url=user.global_avatar)
-
-        if user.avatar:
-            embed.description += f"**[Guild avatar]({user.avatar})**\n"
-        if user.global_avatar:
-            embed.description += f"**[Original avatar]({user.global_avatar})**"
+        embed.set_image(url=user.avatar.url if user.avatar else user.global_avatar.url)
 
         return ctx.response.send_message(embed=embed)
 
