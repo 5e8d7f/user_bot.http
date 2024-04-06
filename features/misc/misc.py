@@ -84,7 +84,7 @@ class Miscellaneous(Cog):
         View a user's avatar.
         """
         user = user or ctx.user
-        if not user.original_avatar and not user.avatar:
+        if not user.avatar and not user.global_avatar:
             return ctx.response.send_message(
                 embed=Embed(
                     description=(
@@ -98,15 +98,15 @@ class Miscellaneous(Cog):
         embed = Embed()
 
         if user.avatar:
-            embed.set_thumbnail(url=user.original_avatar)
+            embed.set_thumbnail(url=user.global_avatar)
             embed.set_image(url=user.avatar)
         else:
-            embed.set_image(url=user.original_avatar)
+            embed.set_image(url=user.global_avatar)
 
         if user.avatar:
             embed.description += f"**[Guild avatar]({user.avatar})**\n"
-        if user.original_avatar:
-            embed.description += f"**[Original avatar]({user.original_avatar})**"
+        if user.global_avatar:
+            embed.description += f"**[Original avatar]({user.global_avatar})**"
 
         return ctx.response.send_message(embed=embed)
 
