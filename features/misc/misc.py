@@ -35,7 +35,7 @@ class Miscellaneous(Cog):
         embed = Embed(
             title=(user.name + (" [BOT]" if user.bot else "")),
         )
-        embed.set_thumbnail(url=user.original_avatar)
+        embed.set_thumbnail(url=user.avatar)
 
         embed.add_field(
             name="Created",
@@ -84,11 +84,29 @@ class Miscellaneous(Cog):
         View a user's avatar.
         """
         user = user or ctx.user
+        if not user.original_avatar and not user.avatar:
+            return ctx.response.send_message(
+                embed=Embed(
+                    description=(
+                        "You don't have an avatar present!"
+                        if user == ctx.user
+                        else f"`{user}` doesn't have an avatar present!"
+                    ),
+                )
+            )
 
-        embed = Embed(
-            title=("Your avatar" if user == ctx.user else f"{user.name}'s avatar"),
-        )
-        embed.set_image(url=user.original_avatar)
+        embed = Embed()
+
+        if user.avatar:
+            embed.set_thumbnail(url=user.original_avatar)
+            embed.set_image(url=user.avatar)
+        else:
+            embed.set_image(url=user.original_avatar)
+
+        if user.avatar:
+            embed.description += f"**[Guild avatar]({user.avatar})**\n"
+        if user.original_avatar:
+            embed.description += f"**[Original avatar]({user.original_avatar})**"
 
         return ctx.response.send_message(embed=embed)
 
@@ -121,10 +139,10 @@ class Miscellaneous(Cog):
             )
 
         embed = Embed(
-            url=user.banner,
+            url=user.banner.url,
             title=("Your banner" if user == ctx.user else f"{user.name}'s banner"),
         )
-        embed.set_image(url=user.banner)
+        embed.set_image(url=user.banner.url)
 
         return ctx.response.send_message(embed=embed)
 
@@ -213,7 +231,7 @@ class Miscellaneous(Cog):
 
         embed.set_author(
             name=self.bot.user.name,
-            icon_url=self.bot.user.original_avatar,
+            icon_url=self.bot.user.avatar,
         )
 
         return ctx.response.send_message(embed=embed)
