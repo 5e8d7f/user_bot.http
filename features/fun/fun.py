@@ -176,7 +176,9 @@ class Fun(Cog):
             case _:
                 final_message = "It's a tie 🎲"
 
-        return ctx.response.send_message(f"{results}\n> {final_message}")
+        return ctx.response.send_message(
+            embed=Embed(description=f"{results}\n> {final_message}")
+        )
 
     @command(name="roulette", user_install=True)
     @describe(color="The color you want to 'bet' on")
@@ -212,4 +214,6 @@ class Fun(Cog):
             case _:
                 final_message = "You lost, try again... 🍃"
 
-        return ctx.response.send_message(f"{results}\n> {final_message}")
+        return ctx.response.send_message(
+            embed=Embed(description=f"{results}\n> {final_message}")
+        )

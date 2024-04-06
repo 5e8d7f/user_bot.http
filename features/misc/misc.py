@@ -35,7 +35,7 @@ class Miscellaneous(Cog):
         embed = Embed(
             title=(user.name + (" [BOT]" if user.bot else "")),
         )
-        embed.set_thumbnail(url=user.avatar)
+        embed.set_thumbnail(url=user.avatar or user.global_avatar)
 
         embed.add_field(
             name="Created",
@@ -84,22 +84,12 @@ class Miscellaneous(Cog):
         View a user's avatar.
         """
         user = user or ctx.user
-        if not user.avatar:
-            return ctx.response.send_message(
-                embed=Embed(
-                    description=(
-                        "You don't have an avatar present!"
-                        if user == ctx.user
-                        else f"`{user}` doesn't have an avatar present!"
-                    ),
-                )
-            )
 
         embed = Embed(
-            url=user.avatar.url,
+            url=user.avatar.url or user.global_avatar.url,
             title=("Your avatar" if user == ctx.user else f"{user.name}'s avatar"),
         )
-        embed.set_image(url=user.avatar.url)
+        embed.set_image(url=user.avatar.url or user.global_avatar.url)
 
         return ctx.response.send_message(embed=embed)
 
