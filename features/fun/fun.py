@@ -39,12 +39,14 @@ class Fun(Cog):
 
     @command(name="8ball", user_install=True)
     @describe(
-        question="The question you want want answers too",
+        question="The question you want answers to",
     )
     async def eightball(self, ctx: Context, question: str):
         """Consult 8ball to receive an answer"""
         shakes = random.randint(1, 5)
-        response = random.choices(list(self.eightball_responses.keys()), k=shakes)
+        responses = [random.choice(list(self.eightball_responses.keys())) for _ in range(shakes)]
+        response = self.eightball_responses[responses[-1]]
+
         return ctx.response.send_message(
             embed=Embed(
                 title="🎱 8ball",
