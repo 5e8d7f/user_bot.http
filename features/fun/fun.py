@@ -45,8 +45,8 @@ class Fun(Cog):
         """Consult 8ball to receive an answer"""
         shakes = random.randint(1, 5)
         responses = random.choices(list(self.eightball_responses.keys()), k=shakes)
-        response = self.eightball_responses[responses[0]]
-
+        response = responses[0]
+        
         return ctx.response.send_message(
             embed=Embed(
                 title="🎱 8ball",
