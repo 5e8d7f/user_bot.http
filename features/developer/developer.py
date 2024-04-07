@@ -19,9 +19,14 @@ class Developer(Cog):
     )
     @check(owner)
     async def dm(self: "Developer", ctx: Context, user: Member, message: str):
-        try:
-            await user.send(message)
-        except Exception as e:
-            return ctx.response.send_message(f"Failed to send message: {e}")
+        async def call_after():
+            try:
+                await user.send(message)
+            except Exception as e:
+                return await ctx.followup.send(
+                    f"Failed to send message to {user}. ({e})"
+                )
 
-        return ctx.response.send_message(f"Sent message to {user}.")
+            return await ctx.followup.send(f"Sent message to {user}.")
+
+        return ctx.response.defer(thinking=True, call_after=call_after)

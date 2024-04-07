@@ -44,7 +44,7 @@ class Fun(Cog):
     async def eightball(self, ctx: Context, question: str):
         """Consult 8ball to receive an answer"""
         shakes = random.randint(1, 5)
-        response = random.choice(list(self.eightball_responses.keys()))
+        response = random.choices(list(self.eightball_responses.keys()), k=shakes)
         return ctx.response.send_message(
             embed=Embed(
                 title="🎱 8ball",
@@ -53,37 +53,10 @@ class Fun(Cog):
             ).set_footer(text=f"{plural(shakes):shake|shakes}")
         )
 
-    @command(name="duck", user_install=True)
-    async def duck(self, ctx: Context):
-        """Posts a random duck"""
-        return await random_image(ctx, "https://random-d.uk/api/v1/random", "url")
-
-    @command(name="coffee", user_install=True)
-    async def coffee(self, ctx: Context):
-        """Posts a random coffee"""
-        return await random_image(
-            ctx, "https://coffee.alexflipnote.dev/random.json", "file"
-        )
-
-    @command(name="birb", user_install=True)
-    async def birb(self, ctx: Context):
-        """Posts a random birb"""
-        return await random_image(ctx, "https://api.alexflipnote.dev/birb", "file")
-
-    @command(name="sadcat", user_install=True)
-    async def sadcat(self, ctx: Context):
-        """Post a random sadcat"""
-        return await random_image(ctx, "https://api.alexflipnote.dev/sadcat", "file")
-
     @command(name="cat", user_install=True)
     async def cat(self, ctx: Context):
-        """Posts a random cat"""
-        return await random_image(ctx, "https://api.alexflipnote.dev/cats", "file")
-
-    @command(name="dog", user_install=True)
-    async def dog(self, ctx: Context):
         """Posts a random dog"""
-        return await random_image(ctx, "https://api.alexflipnote.dev/dogs", "file")
+        return await random_image(ctx, "https://api.alexflipnote.dev/cats", "file")
 
     @command(name="fox", user_install=True)
     async def fox(self, ctx: Context):

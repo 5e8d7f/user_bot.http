@@ -9,12 +9,12 @@ async def random_image(ctx: Context, url: str, endpoint: list[str]) -> MessageRe
         request: Munch = await ctx.bot.http.request(url)
 
         if endpoint not in request:
-            return await ctx.followup.send("An error occured while fetching the image.")
+            return await ctx.followup.send("Failed to get image. Try again later.")
 
         return await ctx.followup.send(
             file=File(
                 BytesIO(await ctx.bot.http.request(request[endpoint])),
-                filename="image.png",
+                filename=f"{request[endpoint].split('/')[-1]}.png",
             )
         )
 
