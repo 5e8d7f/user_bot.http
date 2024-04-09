@@ -35,7 +35,7 @@ class Miscellaneous(Cog):
         embed = Embed(
             title=(user.name + (" [BOT]" if user.bot else "")),
         )
-        embed.set_thumbnail(url=user.avatar)
+        embed.set_thumbnail(url=user.avatar.url)
 
         embed.add_field(
             name="Created",
@@ -96,11 +96,11 @@ class Miscellaneous(Cog):
             )
 
         embed = Embed(
-            url=user.avatar if user.avatar else user.global_avatar,
+            url=user.avatar.url if user.avatar else user.global_avatar.url,
             title=("Your avatar" if user == ctx.user else f"{user.name}'s avatar"),
         )
 
-        embed.set_image(url=user.avatar if user.avatar else user.global_avatar)
+        embed.set_image(url=user.avatar.url if user.avatar else user.global_avatar.url)
 
         return ctx.response.send_message(embed=embed)
 
@@ -133,10 +133,10 @@ class Miscellaneous(Cog):
             )
 
         embed = Embed(
-            url=user.banner,
+            url=user.banner.url,
             title=("Your banner" if user == ctx.user else f"{user.name}'s banner"),
         )
-        embed.set_image(url=user.banner)
+        embed.set_image(url=user.banner.url)
 
         return ctx.response.send_message(embed=embed)
 
@@ -225,7 +225,7 @@ class Miscellaneous(Cog):
 
         embed.set_author(
             name=self.bot.user.name,
-            icon_url=self.bot.user.avatar,
+            icon_url=self.bot.user.avatar.url,
         )
 
         return ctx.response.send_message(embed=embed)

@@ -1,9 +1,17 @@
 services:
   bot:
     container_name: user_bot.http
+    hostname: user.shiro.local
     build: .
-    restart: unless-stopped
+    restart: always
     env_file:
       - .env
-    ports:
-      - "9999:9999"
+    expose:
+      - 80
+    networks:
+      - shiro
+
+
+networks:
+  shiro:
+    external: true
