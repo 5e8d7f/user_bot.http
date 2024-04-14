@@ -84,7 +84,7 @@ class Miscellaneous(Cog):
         View a user's avatar.
         """
         user = user or ctx.user
-        if not user.avatar and not user.global_avatar:
+        if not user.avatar:
             return ctx.response.send_message(
                 embed=Embed(
                     description=(
@@ -96,11 +96,11 @@ class Miscellaneous(Cog):
             )
 
         embed = Embed(
-            url=user.avatar.url if user.avatar else user.global_avatar.url,
+            url=user.avatar.url,
             title=("Your avatar" if user == ctx.user else f"{user.name}'s avatar"),
         )
 
-        embed.set_image(url=user.avatar.url if user.avatar else user.global_avatar.url)
+        embed.set_image(url=user.avatar.url)
 
         return ctx.response.send_message(embed=embed)
 
