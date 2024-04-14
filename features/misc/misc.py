@@ -3,7 +3,7 @@ from io import BytesIO
 from typing import Optional
 
 import psutil
-from discord_http import Context, Embed, File, Member
+from discord_http import Context, Embed, File, User
 from discord_http.commands import Cog, command, describe
 from munch import Munch
 
@@ -25,7 +25,7 @@ class Miscellaneous(Cog):
     async def userinfo(
         self: "Miscellaneous",
         ctx: Context,
-        user: Optional[Member] = None,
+        user: Optional[User] = None,
     ):
         """
         View information about a user.
@@ -46,25 +46,25 @@ class Miscellaneous(Cog):
             ),
         )
 
-        if hasattr(user, "guild"):
-            embed.add_field(
-                name="Joined",
-                value=(
-                    format_dt(user.joined_at, "D")
-                    + "\n> "
-                    + format_dt(user.joined_at, "R")
-                ),
-            )
+        #if hasattr(user, "guild"):
+        #    embed.add_field(
+        #        name="Joined",
+        #        value=(
+        #            format_dt(user.joined_at, "D")
+        #            + "\n> "
+        #            + format_dt(user.joined_at, "R")
+        #        ),
+        #    )
 
-            if user.roles:
-                embed.add_field(
-                    name="Roles",
-                    value=", ".join(
-                        role.mention for role in list(reversed(user.roles))[:5]
-                    )
-                    + (f" (+{len(user.roles) - 5})" if len(user.roles) > 5 else ""),
-                    inline=False,
-                )
+        #    if user.roles:
+        #        embed.add_field(
+        #            name="Roles",
+        #            value=", ".join(
+        #                role.mention for role in list(reversed(user.roles))[:5]
+        #            )
+        #            + (f" (+{len(user.roles) - 5})" if len(user.roles) > 5 else ""),
+        #            inline=False,
+        #        )
 
         return ctx.response.send_message(embed=embed)
 
@@ -78,7 +78,7 @@ class Miscellaneous(Cog):
     async def avatar(
         self: "Miscellaneous",
         ctx: Context,
-        user: Optional[Member] = None,
+        user: Optional[User] = None,
     ):
         """
         View a user's avatar.
@@ -114,7 +114,7 @@ class Miscellaneous(Cog):
     async def banner(
         self: "Miscellaneous",
         ctx: Context,
-        user: Optional[Member] = None,
+        user: Optional[User] = None,
     ):
         """
         View a user's banner.

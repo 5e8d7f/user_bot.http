@@ -1,4 +1,4 @@
-from discord_http import Context, Member
+from discord_http import Context, User
 from discord_http.commands import Cog, check, command, describe
 
 from tools import Client
@@ -18,7 +18,7 @@ class Developer(Cog):
         message="The message to send.",
     )
     @check(owner)
-    async def dm(self: "Developer", ctx: Context, user: Member, message: str):
+    async def dm(self: "Developer", ctx: Context, user: User, message: str):
         async def call_after():
             try:
                 await user.send(message)
