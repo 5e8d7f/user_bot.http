@@ -46,7 +46,7 @@ class Miscellaneous(Cog):
             ),
         )
 
-        #if hasattr(user, "guild"):
+        # if hasattr(user, "guild"):
         #    embed.add_field(
         #        name="Joined",
         #        value=(
@@ -84,6 +84,7 @@ class Miscellaneous(Cog):
         View a user's avatar.
         """
         user = user or ctx.user
+
         if not user.avatar:
             return ctx.response.send_message(
                 embed=Embed(
