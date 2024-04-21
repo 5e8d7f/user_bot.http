@@ -41,7 +41,7 @@ class Fun(Cog):
     @describe(
         question="The question you want answers to",
     )
-    async def eightball(self, ctx: Context, question: str):
+    async def eightball(self: "Fun", ctx: Context, question: str):
         """Consult 8ball to receive an answer"""
         shakes = random.randint(1, 5)
         responses = random.choices(list(self.eightball_responses.keys()), k=shakes)
@@ -56,17 +56,17 @@ class Fun(Cog):
         )
 
     @command(name="cat", user_install=True)
-    async def cat(self, ctx: Context):
+    async def cat(self: "Fun", ctx: Context):
         """Posts a random dog"""
         return await random_image(ctx, "https://api.alexflipnote.dev/cats", "file")
 
     @command(name="fox", user_install=True)
-    async def fox(self, ctx: Context):
+    async def fox(self: "Fun", ctx: Context):
         """Posts a random fox"""
         return await random_image(ctx, "https://randomfox.ca/floof", "image")
 
     @command(name="coinflip", user_install=True)
-    async def coinflip(self, ctx: Context):
+    async def coinflip(self: "Fun", ctx: Context):
         """Coinflip!"""
 
         return ctx.response.send_message(
@@ -75,7 +75,7 @@ class Fun(Cog):
 
     @command(name="urban", user_install=True)
     @describe(search="The search term you want to search for")
-    async def urban(self, ctx: Context, search: str):
+    async def urban(self: "Fun", ctx: Context, search: str):
         """Search the Urban Dictionary"""
         data: Munch = await self.bot.http.request(
             "https://api.urbandictionary.com/v0/define", params=dict(term=search)
@@ -111,14 +111,14 @@ class Fun(Cog):
 
     @command(name="reverse", user_install=True)
     @describe(text="The text you want to reverse")
-    async def reverse(self, ctx: Context, text: str):
+    async def reverse(self: "Fun", ctx: Context, text: str):
         """Reverse the text you send"""
         return ctx.response.send_message(
             text[::-1], allowed_mentions=AllowedMentions.none()
         )
 
     @command(name="slot", user_install=True)
-    async def slot(self, ctx: Context):
+    async def slot(self: "Fun", ctx: Context):
         """Roll the slot machine"""
         emojis = ["🍇", "🍊", "🍐", "🍒", "🍋", "🍉", "🍌", "🍓", "🍈"]
         slots = [random.choice(emojis) for _ in range(3)]
@@ -132,7 +132,7 @@ class Fun(Cog):
         )
 
     @command(name="dice", user_install=True)
-    async def dice(self, ctx: Context):
+    async def dice(self: "Fun", ctx: Context):
         """Dice game. Good luck"""
         bot_dice, player_dice = [random.randint(1, 6) for _ in range(2)]
 
@@ -165,7 +165,7 @@ class Fun(Cog):
             "yellow": "🟡 Yellow",
         }
     )
-    async def roulette(self, ctx: Context, color: Choice[str]):
+    async def roulette(self: "Fun", ctx: Context, color: Choice[str]):
         """color roulette"""
         colors = {
             "🔵": "blue",
