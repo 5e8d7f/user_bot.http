@@ -1,12 +1,12 @@
 version: 2
 updates:
- - package-ecosystem: "devcontainers"
-   directory: "/"
-   schedule:
-     interval: "daily"
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "daily"
     reviewers:
       - "ignaigna"
- - package-ecosystem: "pip"
+  - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
       interval: "daily"
