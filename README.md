@@ -47,16 +47,15 @@ Use the following URL, replacing YOUR_APPLICATION_ID with your application ID: <
 
 ### Optional Tools
 
-**ngrok**: Expose your local server to the internet for testing (<https://ngrok.com/>)
+[**ngrok**](https://ngrok.com) (Expose your local server to the internet for testing)
 
-**ruff**: Linter for Python code (<https://github.com/astral-sh/ruff>)
+[**ruff**](https://github.com/astral-sh/ruff) (An extremely fast Python linter and code formatter, written in Rust)
 
-**PM2**: Process manager to keep the bot running 24/7 (<https://pm2.io/>)
+[**PM2**](https://pm2.io) (Node.js Production Process Manager with a built-in Load Balancer)
 
-**Docker**: Containerization for consistent deployment (<https://www.docker.com/>)
+[**Docker**](https://www.docker.com) (A collaborative project for the container ecosystem to assemble container-based systems)
 
 ### Additional Information
 
-discord.http Documentation: <https://discordhttp.dev>
-
+discord.http Documentation: <https://discordhttp.alexflipnote.dev>
 Setting Up Interaction URLs: <https://discord.com/developers/docs/quick-start/getting-started>
